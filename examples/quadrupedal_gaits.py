@@ -12,7 +12,8 @@ WITHDISPLAY = 'display' in sys.argv or 'CROCODDYL_DISPLAY' in os.environ
 WITHPLOT = 'plot' in sys.argv or 'CROCODDYL_PLOT' in os.environ
 
 # Loading the anymal model
-anymal = example_robot_data.load('anymal')
+# anymal = example_robot_data.load('anymal')
+anymal = example_robot_data.load('a1')
 
 # Defining the initial state of the robot
 q0 = anymal.model.referenceConfigurations['standing'].copy()
@@ -20,7 +21,9 @@ v0 = pinocchio.utils.zero(anymal.model.nv)
 x0 = np.concatenate([q0, v0])
 
 # Setting up the 3d walking problem
-lfFoot, rfFoot, lhFoot, rhFoot = 'LF_FOOT', 'RF_FOOT', 'LH_FOOT', 'RH_FOOT'
+# lfFoot, rfFoot, lhFoot, rhFoot = 'LF_FOOT', 'RF_FOOT', 'LH_FOOT', 'RH_FOOT'
+lfFoot, rfFoot, lhFoot, rhFoot = 'FL_foot', 'FR_foot', 'RL_foot', 'RR_foot'
+
 gait = SimpleQuadrupedalGaitProblem(anymal.model, lfFoot, rfFoot, lhFoot, rhFoot)
 
 # Setting up all tasks
@@ -58,8 +61,8 @@ GAITPHASES = [{
     }
 }, {
     'jumping': {
-        'jumpHeight': 0.15,
-        'jumpLength': [0.0, 0.3, 0.],
+        'jumpHeight': 0.6,
+        'jumpLength': [1.0, 0.0, 0.],
         'timeStep': 1e-2,
         'groundKnots': 10,
         'flyingKnots': 20

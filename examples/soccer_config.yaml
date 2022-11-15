@@ -1,0 +1,24 @@
+robot_info:
+  robot: !!str talos_legs
+  ref_config: !!str half_sitting
+  rightFoot: !!str right_sole_link
+  leftFoot: !!str left_sole_link
+  kickFoot:  !!str right_sole_link
+traj_params:
+  DT: !!float 0.025
+  T: !!int 40
+  T_standup: !!int 10
+  T_windup: !!int 10
+  T_kick: !!int 10
+  T_recovery: !!int 10
+  T_balance: !!int 10
+  ball_radius: 0.11
+  target: [0.4, -0.3, 0.51]
+  kickFootWindupPos: [-0.3, -0.3, 0.2]
+  kickFootLandingPos: [0.5, 0.0, 0.0]
+debug_info:
+  display_step: !!bool false
+  plot: !!bool false
+  experiment_name: !!str high_kick
+  save_dir_path: !!str soccer_results
+

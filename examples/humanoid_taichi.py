@@ -48,6 +48,7 @@ comRef[2] = pinocchio.centerOfMass(rmodel, rdata, q0)[2].item()
 
 # Initialize Gepetto viewer
 if WITHDISPLAY:
+    # display = crocoddyl.MeshcatDisplay(robot, 4, 4, False)
     display = crocoddyl.GepettoDisplay(robot, frameNames=[rightFoot, leftFoot])
     display.robot.viewer.gui.addSphere('world/point', .05, [1., 0., 0., 1.])  # radius = .1, RGBA=1001
     display.robot.viewer.gui.applyConfiguration('world/point', target.tolist() + [0., 0., 0., 1.])  # xyz+quaternion
@@ -161,16 +162,13 @@ problem = crocoddyl.ShootingProblem(x0, [runningModel1] * T + [runningModel2] * 
 # Creating the DDP solver for this OC problem, defining a logger
 solver = crocoddyl.SolverBoxFDDP(problem)
 if WITHDISPLAY and WITHPLOT:
-    solver.setCallbacks([
-        crocoddyl.CallbackLogger(),
-        crocoddyl.CallbackVerbose(),
-        crocoddyl.CallbackDisplay(crocoddyl.GepettoDisplay(robot, 4, 4, frameNames=[rightFoot, leftFoot]))
-    ])
+    solver.setCallbacks([crocoddyl.CallbackLogger(),
+                  crocoddyl.CallbackVerbose(),
+                  crocoddyl.CallbackDisplay(display)])
 elif WITHDISPLAY:
-    solver.setCallbacks([
-        crocoddyl.CallbackVerbose(),
-        crocoddyl.CallbackDisplay(crocoddyl.GepettoDisplay(robot, 4, 4, frameNames=[rightFoot, leftFoot]))
-    ])
+    solver.setCallbacks([crocoddyl.CallbackLogger(),
+                  crocoddyl.CallbackVerbose(),
+                  crocoddyl.CallbackDisplay(display)])
 elif WITHPLOT:
     solver.setCallbacks([crocoddyl.CallbackLogger(), crocoddyl.CallbackVerbose()])
 else:
