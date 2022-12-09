@@ -19,7 +19,23 @@ traj_params:
 debug_info:
   display_step: !!bool false
   plot: !!bool false
-  experiment_name: !!str high_kick
+  experiment_name: !!str jump
   save_dir_path: !!str soccer_results
-jump_step_params:
 
+jumping_params:
+  height: 0.1
+  step: [0.3, 0.0, 0.0]
+  landingLocation: [0.5, 0.2, 0.0]
+  targetLocation: [0.6, -0.4, 0.0]
+  stepFoot: left_sole_link
+  groundKnots: 5
+  flyingKnots: 5
+  kickKnots: 1
+  recoveryKnots: 2
+  jumpKnots: 10
+  timeStep: 0.02
+
+kick_params:
+  targetLocation: [0.6, -0.4, 0.0]
+  kickKnots: 10
+  recoveryKnots: 10

@@ -143,8 +143,12 @@ def generate_jump_step_trajectory(config_file):
         jump_step_foot = jumping_params["stepFoot"]
         groundKnots = jumping_params["groundKnots"]
         flyingKnots = jumping_params["flyingKnots"]
+        kickKnots = jumping_params["kickKnots"]
+        recoveryKnots = jumping_params["recoveryKnots"]
+        jumpKnots = jumping_params["jumpKnots"]
         timeStep = jumping_params["timeStep"]
-
+        landingLocation = np.array(jumping_params["landingLocation"])
+        targetLocation = np.array(jumping_params["targetLocation"])
         
 
 
@@ -189,7 +193,9 @@ def generate_jump_step_trajectory(config_file):
     x0 = np.concatenate([q0, np.zeros(rmodel.nv)])
     gait = SoccerProblem(rmodel, rightFoot, leftFoot, integrator='rk4', control='rk4')
     # problem = gait.createJumpingProblem(x0, jump_height, jump_step, timeStep, groundKnots, flyingKnots, final=False)
-    problem = gait.createTakeOffProblem(x0, jump_height, jump_step, timeStep, groundKnots, flyingKnots, final=True)
+    # problem = gait.createTakeOffProblem(x0, jump_height, jump_step, timeStep, groundKnots, flyingKnots, final=True)
+    problem = gait.createSoccerTakeOffJumpProblem(x0, jump_height, landingLocation, targetLocation, timeStep, groundKnots, jumpKnots, kickKnots, recoveryKnots)
+
     # Problem definition
     x0 = np.concatenate([q0, pinocchio.utils.zero(state.nv)])
     solver = crocoddyl.SolverBoxFDDP(problem)
